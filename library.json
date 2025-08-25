@@ -1,0 +1,25 @@
+{
+    "name": "Rotary",
+    "version":"1.0.0",
+    "keywords": "Rotary",
+    "description": "Arduino library for using a rotary up/down encoder with push button",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/mverch67/Rotary"
+    },
+    "authors":
+    [
+      {
+        "name":"mverch",
+        "email":"manuel@meshtastic.com",
+        "maintainer": true
+      }
+    ],
+    "frameworks": ["espidf", "arduino"],
+    "platforms": ["espressif32", "native"],
+    "build": {
+      "includeDir": "src",
+      "srcDir": "src"
+    }
+  }
