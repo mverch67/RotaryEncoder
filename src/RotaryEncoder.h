@@ -6,12 +6,6 @@
 
 #include "stdint.h"
 
-// Enable this to emit codes twice per step.
-//#define HALF_STEP
-
-// Enable weak pullups
-//#define ENABLE_PULLUPS
-
 
 class RotaryEncoder
 {
