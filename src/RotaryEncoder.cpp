@@ -196,6 +196,9 @@ const uint8_t ttable[7][4] = {
 #endif
 #endif
 
+volatile uint8_t RotaryEncoder::pinstate = 0;
+RotaryEncoder* RotaryEncoder::instance = nullptr;
+
 /*
  * Constructor. Each arg is the pin number for each encoder contact.
  */
@@ -240,13 +243,23 @@ void RotaryEncoder::init(uint8_t _pin1, uint8_t _pin2) {
   pinMode(pin1, INPUT);
   pinMode(pin2, INPUT);
 #endif
-  // Initialise state.
+
+  instance = this;
+  pinstate = (digitalRead(pin2) << 1) | digitalRead(pin1);
+
+  // attach interrupts to the two pins
+  auto rotate = []() {
+    pinstate = (digitalRead(instance->pin2) << 1) | digitalRead(instance->pin1);
+  };
+
+  attachInterrupt(pin1, rotate, CHANGE);
+  attachInterrupt(pin2, rotate, CHANGE);
+
+// Initialise state.
   state = R_START;
 }
 
 RotaryEncoder::Direction RotaryEncoder::process() {
-  // Grab state of input pins.
-  uint8_t pinstate = (digitalRead(pin2) << 1) | digitalRead(pin1);
   // Determine new state from the pins and state table.
   state = ttable[state & 0xf][pinstate];
   // Return emit bits, ie the generated event.

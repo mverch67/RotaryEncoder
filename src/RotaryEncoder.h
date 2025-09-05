@@ -42,5 +42,7 @@ class RotaryEncoder
     uint8_t buttonPin;
     uint8_t buttonState;
     uint32_t buttonTimer;
+    static volatile uint8_t pinstate;
+    static RotaryEncoder* instance;
 };
 
